@@ -101,6 +101,19 @@ Bot.command('list', (ctx) => {
     })
 })
 
+Bot.command('stat', (ctx) => {
+    if(ctx.from.id === 158842886) {
+        Site.find().distinct('chatid').then((users) => {
+            Site.find().distinct('url').then((sites) => {
+                ctx.reply('На данный момент пользователей - ' + users.length + ', сайтов - ' + sites.length);
+            })
+        })
+    } else {
+        ctx.reply('С такими запросами... катитесь... ну Вы поняли');
+        ctx.replyWithPhoto({source: './wtf.jpg'});
+    }
+})
+
 Bot.command('/showmetheway', (ctx) => {
     if(ctx.from.id === 158842886) {
         Site.find({}).then((data) => {

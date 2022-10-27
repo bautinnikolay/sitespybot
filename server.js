@@ -5,6 +5,7 @@ const get = require('simple-get');
 const schedule = require('node-schedule');
 const {Bot} = require('./bot');
 let cronFunction = require('./job');
+let fs = require('fs');
 
 /* Server logic start here! */
 let app = express()
@@ -12,22 +13,7 @@ let app = express()
 app.set('view engine', 'pug')
 
 app.get('/', (req, res) => {
-    for(let i = 1; i <= 100; i++) {
-        let site = new Site({
-            chatid: '158842886',
-            url: 'https://winerate.ru/test'+i,
-            paused: false,
-            created: new Date()
-        })
-        site.save().then(() => {});
-    }
     res.sendStatus(200);
-})
-
-app.get('/del', (req, res) => {
-    Site.deleteMany({paused: false}).then(() => {
-        res.sendStatus(200);
-    })
 })
 
 let server = require('http').createServer(app)
@@ -39,6 +25,19 @@ Bot.launch();
 /* Cron start here! */
 const job = schedule.scheduleJob('*/1 * * * *', function() {
     cronFunction.check(Bot, Site, get);
+});
+
+const backup = schedule.scheduleJob('* * */1 * *', function() {
+    Site.find().then((data) => {
+        let json = JSON.stringify(data);
+        fs.writeFile('backup.json', json, 'utf8', function(err, result) {
+            if(!err) {
+                console.log('Backup created ' + new Date());
+            } else {
+                console.log('Cant create backup at' + new Date() + '. Error: ' + err)
+            }
+        });
+    })
 });
 
 server.listen(3000);
