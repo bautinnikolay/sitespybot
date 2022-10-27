@@ -1,5 +1,4 @@
 module.exports.check = function(Bot, Site, get) {
-    console.log('started at ' + new Date());
     Site.find({}).then((sites) => {
         let sitesList = [];
         sites.forEach((site) => {
