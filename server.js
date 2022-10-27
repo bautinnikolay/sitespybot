@@ -27,12 +27,14 @@ const job = schedule.scheduleJob('*/1 * * * *', function() {
     cronFunction.check(Bot, Site, get);
 });
 
-const backup = schedule.scheduleJob('* * */1 * *', function() {
+const backup = schedule.scheduleJob('* */23 * * *', function() {
     Site.find().then((data) => {
         let json = JSON.stringify(data);
         fs.writeFile('backup.json', json, 'utf8', function(err, result) {
             if(!err) {
                 console.log('Backup created ' + new Date());
+                Bot.telegram.sendMessage('158842886', 'Бэкап от ' + new Date());
+                Bot.telegram.sendDocument('158842886', {source: 'backup.json'});
             } else {
                 console.log('Cant create backup at' + new Date() + '. Error: ' + err)
             }
