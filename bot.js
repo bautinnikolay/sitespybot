@@ -16,7 +16,7 @@ Bot.command('help', (ctx) => {
 })
 
 Bot.command('add', (ctx2) => {
-    let url = ctx2.message.text.substring(4);
+    let url = ctx2.message.text.substring(5);
     if(validUrl.isUri(url)) {
         get.concat(url, function(err, response, data) {
             if (err) {
