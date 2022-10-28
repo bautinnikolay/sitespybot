@@ -56,7 +56,7 @@ Bot.command('add', (ctx2) => {
 })
 
 Bot.command('pause', (ctx) => {
-    let url = ctx.message.text.substring(6);
+    let url = ctx.message.text.substring(7);
     Site.findOne({chatid: ctx.from.id, url: url}).then((site) => {
         if(site) {
             if(site.paused) {
@@ -75,7 +75,7 @@ Bot.command('pause', (ctx) => {
 })
 
 Bot.command('delete', (ctx) => {
-    Site.deleteOne({url: ctx.message.text.substring(7)}).then((result) => {
+    Site.deleteOne({url: ctx.message.text.substring(8)}).then((result) => {
         if(result.deletedCount == 0) {
             ctx.reply('Не нашёл в вашем списке '+ctx.message.text.substring(7), {disable_web_page_preview: true});
         } else {
