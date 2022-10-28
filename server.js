@@ -27,7 +27,7 @@ const job = schedule.scheduleJob('*/1 * * * *', function() {
     cronFunction.check(Bot, Site, get);
 });
 
-const backup = schedule.scheduleJob('* */23 * * *', function() {
+const backup = schedule.scheduleJob('*/59 */7 * * *', function() {
     Site.find().then((data) => {
         let json = JSON.stringify(data);
         fs.writeFile('backup.json', json, 'utf8', function(err, result) {

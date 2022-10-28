@@ -3,6 +3,7 @@ const {mongoose} = require('./mongoose/mongoose')
 const {Site} = require('./models/sites');
 const get = require('simple-get');
 let fs = require('fs');
+var validUrl = require('valid-url');
 
 const Bot = new Telegraf('5643151732:AAEHVvehfHviBbPSOy3OPTzNQgw-AxlwdJM');
 
@@ -16,7 +17,7 @@ Bot.command('help', (ctx) => {
 
 Bot.command('add', (ctx2) => {
     let url = ctx2.message.text.substring(4);
-    if(url.search('https') != -1 || url.search('http') != -1) {
+    if(validUrl.isUri(url)) {
         get.concat(url, function(err, response, data) {
             if (err) {
                 ctx2.reply('Упс, похоже что-то пошло не так, либо указан не верный url, либо я не могу до него достучаться (я в РФ, так что мне не все сайты доступны)');
@@ -50,7 +51,7 @@ Bot.command('add', (ctx2) => {
             }
         })
     } else {
-        ctx2.reply('Упс, в url нет протокола https или http - '+url);
+        ctx2.reply('Упс, кажется это не url - '+url);
     }
 })
 
