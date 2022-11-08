@@ -3,7 +3,7 @@ const {mongoose} = require('./mongoose/mongoose')
 const {Site} = require('./models/sites');
 const get = require('simple-get');
 let fs = require('fs');
-var validUrl = require('valid-url');
+let validUrl = require('valid-url');
 
 const Bot = new Telegraf('5643151732:AAEHVvehfHviBbPSOy3OPTzNQgw-AxlwdJM');
 
@@ -75,7 +75,7 @@ Bot.command('pause', (ctx) => {
 })
 
 Bot.command('delete', (ctx) => {
-    Site.deleteOne({url: ctx.message.text.substring(8)}).then((result) => {
+    Site.deleteOne({url: ctx.message.text.substring(8), chatid: cxt.from.id}).then((result) => {
         if(result.deletedCount == 0) {
             ctx.reply('Не нашёл в вашем списке '+ctx.message.text.substring(7), {disable_web_page_preview: true});
         } else {
