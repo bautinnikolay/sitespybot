@@ -75,7 +75,7 @@ Bot.command('pause', (ctx) => {
 })
 
 Bot.command('delete', (ctx) => {
-    Site.deleteOne({url: ctx.message.text.substring(8), chatid: cxt.from.id}).then((result) => {
+    Site.deleteOne({url: ctx.message.text.substring(8), chatid: ctx.from.id}).then((result) => {
         if(result.deletedCount == 0) {
             ctx.reply('Не нашёл в вашем списке '+ctx.message.text.substring(7), {disable_web_page_preview: true});
         } else {
