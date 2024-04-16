@@ -33,8 +33,8 @@ const backup = schedule.scheduleJob('59 7 * * *', function() {
         fs.writeFile('backup.json', json, 'utf8', function(err, result) {
             if(!err) {
                 console.log('Backup created ' + new Date());
-                Bot.telegram.sendMessage('158842886', 'Бэкап от ' + new Date());
-                Bot.telegram.sendDocument('158842886', {source: 'backup.json'});
+                Bot.telegram.sendMessage('tg_id_to_send_backup_here', 'Бэкап от ' + new Date());
+                Bot.telegram.sendDocument('tg_id_to_send_backup_here', {source: 'backup.json'});
             } else {
                 console.log('Cant create backup at' + new Date() + '. Error: ' + err)
             }
