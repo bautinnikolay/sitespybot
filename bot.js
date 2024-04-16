@@ -5,7 +5,7 @@ const get = require('simple-get');
 let fs = require('fs');
 let validUrl = require('valid-url');
 
-const Bot = new Telegraf('5643151732:AAEHVvehfHviBbPSOy3OPTzNQgw-AxlwdJM');
+const Bot = new Telegraf('tg_token_here');
 
 Bot.command('start', (ctx) => {
     ctx.reply('Привет. Я буду следить за доступностью ваших сайтов, проверяя их раз в минуту.\r\n\r\n/add https://yoursiteurl.com - добавить сайт в список для отслеживания.\r\n\r\n/pause https://yoursiteurl.ru - поставить отслеживание на паузу, снять отслеживание с паузы\r\n\r\n/delete https://yoursiteurl.com - удалить сайт из списка для отслеживания.\r\n\r\n/list - показать ваш список сайтов для отслеживания.\r\n\r\n/help - показать список комманд для бота.\r\n\r\nЕсли есть желание поблагодарить автора, то велком - https://boosty.to/sitespybot', {disable_web_page_preview: true});
@@ -103,7 +103,7 @@ Bot.command('list', (ctx) => {
 })
 
 Bot.command('stat', (ctx) => {
-    if(ctx.from.id === 158842886) {
+    if(ctx.from.id === {tg_owner_id_here}) {
         Site.find().distinct('chatid').then((users) => {
             Site.find().distinct('url').then((sites) => {
                 ctx.reply('На данный момент пользователей - ' + users.length + ', сайтов - ' + sites.length);
@@ -116,7 +116,7 @@ Bot.command('stat', (ctx) => {
 })
 
 Bot.command('/showmetheway', (ctx) => {
-    if(ctx.from.id === 158842886) {
+    if(ctx.from.id === {tg_owner_id_here}) {
         Site.find({}).then((data) => {
             let json = JSON.stringify(data);
             fs.writeFile('data.json', json, 'utf8', function(err, result) {
